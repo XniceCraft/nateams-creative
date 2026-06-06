@@ -13,10 +13,8 @@ export default function Home() {
   return (
     <>
       <main>
-        <div className="relative">
-          <Navbar />
-          <HeroSection />
-        </div>
+        <Navbar />
+        <HeroSection />
         <AboutSection />
         <OfferSection />
         <IndustrySection />
