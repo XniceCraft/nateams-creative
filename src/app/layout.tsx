@@ -1,13 +1,13 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 import type { Metadata } from "next";
 
-const inter = Inter({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+const manrope = Manrope({
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-manrope",
 });
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full antialiased font-sans", inter.className)}
+      className={cn("h-full antialiased font-sans", manrope.className)}
     >
       <body
         className="bg-[#FCF9F8] min-h-full flex flex-col"
