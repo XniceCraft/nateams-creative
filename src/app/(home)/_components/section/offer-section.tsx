@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -44,12 +43,9 @@ export function OfferSection() {
   const contentRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<number>(0);
   const isPinned = useRef<boolean>(false);
-  const isMobile = useIsMobile();
 
   useGSAP(
     () => {
-      if (isMobile) return;
-
       const tickerCallback = () => {
         if (!isPinned) return;
 
@@ -84,7 +80,7 @@ export function OfferSection() {
 
       return () => gsap.ticker.remove(tickerCallback);
     },
-    { scope: containerRef, dependencies: [isMobile], revertOnUpdate: true }
+    { scope: containerRef, revertOnUpdate: true }
   );
 
   return (
@@ -96,10 +92,7 @@ export function OfferSection() {
         <h2 className="text-3xl text-center font-semibold">
           What We Can Help With
         </h2>
-        <div
-          ref={contentRef}
-          className="flex flex-col md:flex-row md:flex-nowrap md:min-w-max gap-5"
-        >
+        <div ref={contentRef} className="flex flex-nowrap min-w-max gap-5">
           {offers.map((offer) => (
             <Card
               key={offer.title}

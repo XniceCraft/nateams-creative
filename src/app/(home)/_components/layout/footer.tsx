@@ -47,10 +47,10 @@ export function Footer() {
           <Image
             src="/logo.png"
             alt="Nateams Logo"
-            className="w-24 h-24 object-contain"
+            className="w-16 h-16 md:w-24 md:h-24 object-contain"
           />
           <div>
-            <h1 className="font-bold text-3xl tracking-tight mb-2">
+            <h1 className="font-bold text-2xl md:text-3xl tracking-tight mb-2">
               Nateams Agency
             </h1>
             <p className="text-sm text-muted-foreground">
