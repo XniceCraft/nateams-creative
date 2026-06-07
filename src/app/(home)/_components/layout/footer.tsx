@@ -1,3 +1,4 @@
+import { Image } from "@/components/image";
 import Link from "next/link";
 
 const routes = [
@@ -43,7 +44,7 @@ export function Footer() {
     <footer className="bg-white px-12 py-8 border-t">
       <div className="flex flex-col md:flex-row justify-between max-w-6xl mx-auto gap-12 mb-7">
         <div className="max-w-xl flex gap-5 items-center">
-          <img
+          <Image
             src="/logo.png"
             alt="Nateams Logo"
             className="w-24 h-24 object-contain"

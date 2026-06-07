@@ -2,8 +2,6 @@
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { MenuIcon } from "lucide-react";
-import Link from "next/link";
 import {
   Drawer,
   DrawerClose,
@@ -14,6 +12,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { Image } from "@/components/image";
+import { MenuIcon } from "lucide-react";
+import Link from "next/link";
 
 const routes = [
   {
@@ -121,7 +122,7 @@ export function Navbar() {
       className="fixed top-0 left-0 z-100 w-full px-6 py-4"
     >
       <div className="bg-white/50 backdrop-blur-lg rounded-full shadow py-2 px-4 max-w-6xl w-full mx-auto flex justify-between items-center">
-        <img
+        <Image
           src="/logo.png"
           className="size-8 object-contain hover:scale-105 hover:-rotate-12 transition-normal duration-300 ease-out"
           alt="Nateams logo"

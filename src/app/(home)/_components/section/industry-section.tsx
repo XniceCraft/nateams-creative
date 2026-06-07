@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Image } from "@/components/image";
 import gsap from "gsap";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -16,33 +17,33 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const industries = [
   {
     title: "Professional Services",
-    image: "./placeholder.webp",
+    image: "/placeholder.webp",
     description:
       "A practical talk on component APIs, accessibility, and shipping faster.",
   },
   {
     title: "Real Estate",
-    image: "./placeholder.webp",
+    image: "/placeholder.webp",
     description: "Property agents, property management, developers.",
   },
   {
     title: "Cafes & Restaurants",
-    image: "./placeholder.webp",
+    image: "/placeholder.webp",
     description: "Cafes, bakeries, restaurants, local F&B brands.",
   },
   {
     title: "Hospitality",
-    image: "./placeholder.webp",
+    image: "/placeholder.webp",
     description: "Hotels, villas, guesthouses, travel businesses.",
   },
   {
     title: "Startups & SaaS",
-    image: "./placeholder.webp",
+    image: "/placeholder.webp",
     description: "New businesses building credibility online.",
   },
   {
     title: "SMEs & Micro Businesses",
-    image: "./placeholder.webp",
+    image: "/placeholder.webp",
     description: "Local businesses looking to grow digitally.",
   },
 ];
@@ -107,7 +108,7 @@ export function IndustrySection() {
       >
         {industries.map((industry) => (
           <Card key={industry.title} className="pt-0 w-84 shrink-0">
-            <img
+            <Image
               src={industry.image}
               alt="Event cover"
               className="relative z-20 aspect-video w-full object-cover"

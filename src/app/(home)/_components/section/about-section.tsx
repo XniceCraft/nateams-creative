@@ -1,3 +1,5 @@
+import { Image } from "@/components/image";
+
 export function AboutSection() {
   return (
     <section className="w-full flex md:flex-row flex-col justify-between max-w-6xl px-8 mx-auto my-24 gap-5">
@@ -16,8 +18,8 @@ export function AboutSection() {
           effective online experiences.
         </p>
       </div>
-      <img
-        src="./placeholder.webp"
+      <Image
+        src="/placeholder.webp"
         alt="Placeholder image"
         className="w-full md:max-w-1/2 aspect-square rounded-lg object-cover"
       />
