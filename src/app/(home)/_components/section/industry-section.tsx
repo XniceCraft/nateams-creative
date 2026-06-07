@@ -1,9 +1,17 @@
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const industries = [
   {
@@ -40,14 +48,65 @@ const industries = [
 ];
 
 export function IndustrySection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const industryContentRef = useRef<HTMLDivElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<number>(0);
+  const isPinned = useRef<boolean>(false);
+
+  useGSAP(
+    () => {
+      gsap.ticker.add(() => {
+        if (!isPinned) return;
+
+        const progress = progressRef.current;
+        const contentPercent = Math.min(1, Math.max(0, (progress - 0.1) / 0.8));
+
+        gsap.to(industryContentRef.current, {
+          xPercent: -(contentPercent * 50),
+          ease: "none",
+        });
+        gsap.to(progressBarRef.current, {
+          scaleX: progress,
+          ease: "none",
+        });
+      });
+
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=200%",
+        pin: true,
+        scrub: 0.5,
+        anticipatePin: 1,
+        onUpdate: ({ progress }) => {
+          progressRef.current = progress;
+        },
+        onEnter: () => {
+          isPinned.current = true;
+        },
+        onLeaveBack: () => {
+          isPinned.current = false;
+        },
+      });
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <section className="w-full max-w-6xl mx-auto my-12">
+    <section
+      ref={containerRef}
+      className="w-full max-w-6xl mx-auto py-12 px-8 overflow-hidden min-h-screen flex flex-col items-center justify-center"
+    >
       <h2 className="text-3xl font-semibold mb-12 text-center">
         Industries We Support
       </h2>
-      <div className="grid grid-cols-4 gap-5">
+      <div
+        ref={industryContentRef}
+        className="flex flex-nowrap min-w-max overflow-x-auto gap-4 py-4 mb-5"
+      >
         {industries.map((industry) => (
-          <Card key={industry.title} className="pt-0">
+          <Card key={industry.title} className="pt-0 w-84 shrink-0">
             <img
               src={industry.image}
               alt="Event cover"
@@ -59,6 +118,12 @@ export function IndustrySection() {
             </CardHeader>
           </Card>
         ))}
+      </div>
+      <div className="border w-full h-2 border-primary rounded">
+        <div
+          ref={progressBarRef}
+          className="h-full w-full bg-primary scale-x-0 origin-left"
+        ></div>
       </div>
     </section>
   );

@@ -1,3 +1,13 @@
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+import gsap from "gsap";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
+
 const reasons = [
   {
     title: "Affordable Pricing",
@@ -18,11 +28,93 @@ const reasons = [
 ] as const;
 
 export function PartnerSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useGSAP(() => {
+    const split = new SplitText(headingRef.current, {
+      type: "words",
+    });
+
+    const titles = gsap.utils
+      .toArray<HTMLHeadingElement>(".partner-reason-title")
+      .map((title) => {
+        const s = new SplitText(title, {
+          type: "words",
+        });
+        return s.words;
+      });
+
+    const descriptions = gsap.utils
+      .toArray<HTMLParagraphElement>(".partner-reason-description")
+      .map((desc) => {
+        const s = new SplitText(desc, {
+          type: "words",
+        });
+        return s.words;
+      });
+
+    const timeline = gsap.timeline({ paused: true });
+
+    timeline.fromTo(
+      split.chars,
+      {
+        yPercent: -105,
+      },
+      {
+        yPercent: 0,
+        ease: "none",
+        stagger: 0.04,
+      }
+    );
+
+    for (let i = 0; i < reasons.length; i++) {
+      const title = titles[i];
+      const description = descriptions[i];
+
+      timeline.fromTo(
+        title,
+        {
+          yPercent: -105,
+        },
+        {
+          yPercent: 0,
+          ease: "none",
+          stagger: 0.04,
+        }
+      );
+
+      timeline.fromTo(
+        description,
+        {
+          yPercent: -105,
+        },
+        {
+          yPercent: 0,
+          ease: "none",
+          stagger: 0.04,
+        },
+        "<"
+      );
+    }
+
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top center",
+      animation: timeline,
+    });
+  }, []);
+
   return (
-    <section className="bg-[#EAE7E7] p-32 flex flex-col items-center my-24">
-      <h2 className="text-4xl text-center font-semibold mb-6">
-        Why Work With Us
-      </h2>
+    <section
+      ref={containerRef}
+      className="bg-[#EAE7E7] p-32 flex flex-col items-center my-24"
+    >
+      <div className="overflow-hidden mb-6">
+        <h2 ref={headingRef} className="text-4xl text-center font-semibold">
+          Why Work With Us
+        </h2>
+      </div>
       <div className="mx-auto">
         {reasons.map((reason, index) => (
           <div
@@ -31,8 +123,12 @@ export function PartnerSection() {
           >
             <span>{(index + 1).toString().padStart(2, "0")}</span>
             <div>
-              <h3 className="text-gray-850 font-medium">{reason.title}</h3>
-              <p className="text-gray-700 text-xs">{reason.desc}</p>
+              <h3 className="partner-reason-title text-gray-850 font-medium">
+                {reason.title}
+              </h3>
+              <p className="partner-reason-description text-gray-700 text-xs">
+                {reason.desc}
+              </p>
             </div>
           </div>
         ))}

@@ -1,7 +1,7 @@
 export function AboutSection() {
   return (
-    <section className="w-full flex justify-between max-w-6xl mx-auto my-24 gap-5">
-      <div className="text-justify w-full max-w-lg">
+    <section className="w-full flex md:flex-row flex-col justify-between max-w-6xl px-8 mx-auto my-24 gap-5">
+      <div className="text-justify w-full md:max-w-lg">
         <h5 className="text-xs uppercase tracking-wider mb-2 font-medium text-orange-900">
           About Our Agency
         </h5>
@@ -19,7 +19,7 @@ export function AboutSection() {
       <img
         src="./placeholder.webp"
         alt="Placeholder image"
-        className="w-full max-w-1/2 aspect-square rounded-lg object-cover"
+        className="w-full md:max-w-1/2 aspect-square rounded-lg object-cover"
       />
     </section>
   );

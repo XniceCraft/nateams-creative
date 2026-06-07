@@ -3,7 +3,7 @@ import { ContactForm } from "../form/contact-form";
 
 export function ContactSection() {
   return (
-    <section className="flex max-w-6xl mx-auto my-24">
+    <section className="flex max-w-6xl mx-auto my-24 px-8 gap-5 flex-col md:flex-row">
       <div className="flex-1/2">
         <h2 className="font-semibold text-lg mb-3">Get In Touch</h2>
         <p className="text-muted-foreground text-sm mb-5">

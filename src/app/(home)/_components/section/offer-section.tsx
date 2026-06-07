@@ -1,11 +1,18 @@
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const offers = [
   {
@@ -32,17 +39,65 @@ const offers = [
 ] as const;
 
 export function OfferSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<number>(0);
+  const isPinned = useRef<boolean>(false);
+
+  useGSAP(
+    () => {
+      gsap.ticker.add(() => {
+        if (!isPinned) return;
+
+        const progress = progressRef.current;
+        const contentPercent = Math.min(1, Math.max(0, (progress - 0.1) / 0.8));
+
+        gsap.to(contentRef.current, {
+          xPercent: -(contentPercent * 50),
+          ease: "none",
+        });
+      });
+
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=200%",
+        pin: true,
+        scrub: 0.5,
+        anticipatePin: 1,
+        onUpdate: ({ progress }) => {
+          progressRef.current = progress;
+        },
+        onEnter: () => {
+          isPinned.current = true;
+        },
+        onLeaveBack: () => {
+          isPinned.current = false;
+        },
+      });
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <section className="bg-[#F6F3F2] my-24 py-12">
-      <div className="w-full max-w-6xl mx-auto space-y-10">
+    <section
+      ref={containerRef}
+      className="bg-[#F6F3F2] my-24 py-12 overflow-hidden min-h-screen flex flex-col items-center justify-center"
+    >
+      <div className="w-full max-w-6xl px-8 mx-auto space-y-10">
         <h2 className="text-3xl text-center font-semibold">
           What We Can Help With
         </h2>
-        <div className="grid grid-cols-4 gap-2">
+        <div ref={contentRef} className="flex flex-nowrap min-w-max gap-5">
           {offers.map((offer) => (
-            <Card key={offer.title}>
+            <Card
+              key={offer.title}
+              className="bg-amber-50 rounded-tr-[3rem] h-64 min-w-54 shrink-0"
+            >
               <CardHeader>
-                <CardTitle>{offer.title}</CardTitle>
+                <CardTitle>
+                  <h3>{offer.title}</h3>
+                </CardTitle>
                 <CardDescription>{offer.description}</CardDescription>
               </CardHeader>
             </Card>
