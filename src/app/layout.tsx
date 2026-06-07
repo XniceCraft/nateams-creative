@@ -1,8 +1,14 @@
 import "./globals.css";
-import { Poppins } from "next/font/google";
+import { Poppins, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 import type { Metadata } from "next";
+
+const inter = Inter({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -23,7 +29,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full antialiased font-sans", poppins.className)}
+      className={cn(
+        "h-full antialiased font-sans",
+        poppins.className,
+        inter.className
+      )}
     >
       <body
         className="bg-[#FCF9F8] min-h-full flex flex-col"

@@ -44,7 +44,7 @@ export function HeroSection() {
   return (
     <section
       id="hero-section"
-      className="relative border-b bg-amber-50 overflow-hidden min-h-screen flex flex-col items-center justify-center"
+      className="relative border-b bg-white overflow-hidden min-h-screen flex flex-col items-center justify-center"
     >
       <div className="max-w-3xl w-full text-center px-8">
         <h2 ref={headingRef} className="text-5xl font-semibold mb-5"></h2>
