@@ -11,6 +11,7 @@ import {
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Image } from "@/components/image";
 import gsap from "gsap";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -54,10 +55,13 @@ export function IndustrySection() {
   const progressBarRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<number>(0);
   const isPinned = useRef<boolean>(false);
+  const isMobile = useIsMobile();
 
   useGSAP(
     () => {
-      gsap.ticker.add(() => {
+      if (isMobile) return;
+
+      const tickerCallback = () => {
         if (!isPinned) return;
 
         const progress = progressRef.current;
@@ -71,7 +75,9 @@ export function IndustrySection() {
           scaleX: progress,
           ease: "none",
         });
-      });
+      };
+
+      gsap.ticker.add(tickerCallback);
 
       ScrollTrigger.create({
         trigger: containerRef.current,
@@ -90,8 +96,10 @@ export function IndustrySection() {
           isPinned.current = false;
         },
       });
+
+      return () => gsap.ticker.remove(tickerCallback);
     },
-    { scope: containerRef }
+    { scope: containerRef, dependencies: [isMobile], revertOnUpdate: true }
   );
 
   return (
@@ -104,7 +112,7 @@ export function IndustrySection() {
       </h2>
       <div
         ref={industryContentRef}
-        className="flex flex-nowrap min-w-max overflow-x-auto gap-4 py-4 mb-5"
+        className="flex flex-col md:flex-row md:flex-nowrap md:min-w-max gap-5 py-4 mb-5"
       >
         {industries.map((industry) => (
           <Card key={industry.title} className="pt-0 w-84 shrink-0">

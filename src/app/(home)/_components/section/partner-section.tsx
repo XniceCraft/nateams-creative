@@ -108,30 +108,32 @@ export function PartnerSection() {
   return (
     <section
       ref={containerRef}
-      className="bg-[#EAE7E7] p-32 flex flex-col items-center my-24"
+      className="bg-[#EAE7E7] flex flex-col items-center my-24 py-32"
     >
-      <div className="overflow-hidden mb-6">
-        <h2 ref={headingRef} className="text-4xl text-center font-semibold">
-          Why Work With Us
-        </h2>
-      </div>
-      <div className="mx-auto">
-        {reasons.map((reason, index) => (
-          <div
-            key={reason.title}
-            className="flex items-center gap-5 py-5 border-b border-gray-300 last:border-none"
-          >
-            <span>{(index + 1).toString().padStart(2, "0")}</span>
-            <div>
-              <h3 className="partner-reason-title text-gray-850 font-medium">
-                {reason.title}
-              </h3>
-              <p className="partner-reason-description text-gray-700 text-xs">
-                {reason.desc}
-              </p>
+      <div className="mx-auto w-full max-w-6xl px-8">
+        <div className="overflow-hidden mb-6">
+          <h2 ref={headingRef} className="text-4xl text-center font-semibold">
+            Why Work With Us
+          </h2>
+        </div>
+        <div className="max-w-lg mx-auto w-full">
+          {reasons.map((reason, index) => (
+            <div
+              key={reason.title}
+              className="flex items-center gap-5 py-5 border-b border-gray-300 last:border-none"
+            >
+              <span>{(index + 1).toString().padStart(2, "0")}</span>
+              <div>
+                <h3 className="partner-reason-title text-gray-850 font-medium">
+                  {reason.title}
+                </h3>
+                <p className="partner-reason-description text-gray-700 text-xs">
+                  {reason.desc}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
