@@ -18,7 +18,7 @@ export default function Home() {
         <AboutSection />
         <OfferSection />
         <IndustrySection />
-        <PartnerSection />
+        <PartnerSection /> *
         <TestimonialSection />
         <ConsultationCTASection />
         <ContactSection />

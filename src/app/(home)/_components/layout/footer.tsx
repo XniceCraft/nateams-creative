@@ -1,43 +1,6 @@
-import { Image } from "@/components/image";
 import Link from "next/link";
-
-const routes = [
-  {
-    label: "Home",
-    href: "#",
-  },
-  {
-    label: "About",
-    href: "#",
-  },
-  {
-    label: "Services",
-    href: "#",
-  },
-  {
-    label: "Portfolio",
-    href: "#",
-  },
-  {
-    label: "Contact",
-    href: "#",
-  },
-] as const;
-
-const contacts = [
-  {
-    label: "Email",
-    url: "#",
-  },
-  {
-    label: "Whatsapp",
-    url: "#",
-  },
-  {
-    label: "Linkedin",
-    url: "#",
-  },
-] as const;
+import { Image } from "@/components/image";
+import { FooterContent } from "@/content/footer";
 
 export function Footer() {
   return (
@@ -61,7 +24,7 @@ export function Footer() {
         </div>
         <div className="flex flex-col md:flex-row justify-center gap-5 md:gap-12">
           <ul className="flex flex-row md:flex-col gap-3">
-            {routes.map((route) => (
+            {FooterContent.routes.map((route) => (
               <li
                 className="relative text-sm group overflow-y-hidden"
                 key={route.label}
@@ -82,23 +45,25 @@ export function Footer() {
             ))}
           </ul>
           <ul className="flex flex-row md:flex-col gap-3">
-            {contacts.map((contact) => (
+            {FooterContent.contacts.map((contact) => (
               <li
                 className="relative text-sm group overflow-y-hidden"
                 key={contact.label}
               >
-                <Link
+                <a
                   className="block relative transition-normal duration-300 ease-out top-0 group-hover:-top-full"
                   href={contact.url}
+                  target="_blank"
                 >
                   {contact.label}
-                </Link>
-                <Link
+                </a>
+                <a
                   className="block absolute top-full left-0 group-hover:top-0 transition-normal duration-300 ease-out"
                   href={contact.url}
+                  target="_blank"
                 >
                   {contact.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>

@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { TextPlugin } from "gsap/TextPlugin";
+import { HeroSectionContent } from "@/content/home/hero-section";
 import gsap from "gsap";
 
 gsap.registerPlugin(useGSAP, TextPlugin);
@@ -17,7 +18,7 @@ export function HeroSection() {
   useGSAP(() => {
     gsap.to(headingRef.current, {
       text: {
-        value: "#HelpYourBusinessGrow",
+        value: HeroSectionContent.heading,
         delimiter: "",
       },
       duration: 3,
@@ -50,12 +51,15 @@ export function HeroSection() {
         <h2
           ref={headingRef}
           className="text-xl sm:text-3xl md:text-5xl font-semibold mb-5"
-        ></h2>
-        <p className="text-gray-800 mb-12">
-          Helping businesses establish a professional online presence through
-          strategic web design, development, and digital solutions.
-        </p>
-        <Button className="mx-auto p-6">Book a Free Consultation</Button>
+        >
+          {HeroSectionContent.heading}
+        </h2>
+        <p className="text-gray-800 mb-12">{HeroSectionContent.description}</p>
+        <Button className="mx-auto p-6" asChild>
+          <a href={HeroSectionContent.buttonUrl} target="_blank">
+            {HeroSectionContent.buttonText}
+          </a>
+        </Button>
       </div>
       {!isMobile && (
         <div

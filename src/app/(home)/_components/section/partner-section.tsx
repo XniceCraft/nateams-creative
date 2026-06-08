@@ -57,7 +57,7 @@ export function PartnerSection() {
     const timeline = gsap.timeline({ paused: true });
 
     timeline.fromTo(
-      split.chars,
+      split.words,
       {
         yPercent: -105,
       },
@@ -81,7 +81,8 @@ export function PartnerSection() {
           yPercent: 0,
           ease: "none",
           stagger: 0.04,
-        }
+        },
+        "<"
       );
 
       timeline.fromTo(

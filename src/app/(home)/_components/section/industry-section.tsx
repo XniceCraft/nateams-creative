@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import {
   Card,
@@ -50,21 +50,22 @@ const industries = [
 
 export function IndustrySection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const industryContentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<number>(0);
   const isPinned = useRef<boolean>(false);
+  const movePixelRef = useRef<number>(0);
 
   useGSAP(
     () => {
       const tickerCallback = () => {
-        if (!isPinned) return;
+        if (!isPinned.current) return;
 
         const progress = progressRef.current;
         const contentPercent = Math.min(1, Math.max(0, (progress - 0.1) / 0.8));
 
-        gsap.to(industryContentRef.current, {
-          xPercent: -(contentPercent * 50),
+        gsap.to(contentRef.current, {
+          x: `-${contentPercent * movePixelRef.current}px`,
           ease: "none",
         });
         gsap.to(progressBarRef.current, {
@@ -80,8 +81,7 @@ export function IndustrySection() {
         start: "top top",
         end: "+=200%",
         pin: true,
-        scrub: 0.5,
-        anticipatePin: 1,
+        scrub: 5,
         onUpdate: ({ progress }) => {
           progressRef.current = progress;
         },
@@ -98,6 +98,27 @@ export function IndustrySection() {
     { scope: containerRef, revertOnUpdate: true }
   );
 
+  useEffect(() => {
+    const handleResize = () => {
+      const left = contentRef.current!.getBoundingClientRect().left;
+      movePixelRef.current =
+        contentRef.current!.scrollWidth - (window.innerWidth - left * 2);
+    };
+
+    let timer: ReturnType<typeof setTimeout>;
+    const debouncedResize = () => {
+      clearTimeout(timer);
+      timer = setTimeout(handleResize, 150);
+    };
+
+    handleResize();
+    window.addEventListener("resize", debouncedResize);
+    return () => {
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(timer);
+    };
+  }, []);
+
   return (
     <section
       ref={containerRef}
@@ -107,15 +128,15 @@ export function IndustrySection() {
         Industries We Support
       </h2>
       <div
-        ref={industryContentRef}
-        className="flex flex-nowrap min-w-max gap-5 py-4 mb-5"
+        ref={contentRef}
+        className="flex flex-nowrap min-w-max gap-5 py-4 mb-5 self-start"
       >
         {industries.map((industry) => (
           <Card key={industry.title} className="pt-0 w-84 shrink-0">
             <Image
               src={industry.image}
               alt="Event cover"
-              className="relative z-20 aspect-video w-full object-cover"
+              className="aspect-video w-full object-cover"
             />
             <CardHeader>
               <CardTitle>{industry.title}</CardTitle>

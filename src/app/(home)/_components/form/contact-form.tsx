@@ -1,5 +1,7 @@
 "use client";
 
+import { useCallback } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -9,9 +11,8 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { ContactSectionContent } from "@/content/home/contact-section";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback } from "react";
-import { Controller, useForm } from "react-hook-form";
 import { z } from "zod/mini";
 
 const contactSchema = z.object({
@@ -51,7 +52,15 @@ export function ContactForm() {
     },
   });
 
-  const onSubmit = useCallback((data: z.infer<typeof contactSchema>) => {}, []);
+  const onSubmit = useCallback((values: z.infer<typeof contactSchema>) => {
+    const { name, email, businessName, projectDetails } = values;
+
+    const body = `Name: ${name}\nEmail: ${email}\nBusiness Name: ${businessName}\nProject Details: ${projectDetails}`;
+
+    const url = `https://wa.me/${ContactSectionContent.formWhatsapp}?text=${encodeURIComponent(body)}`;
+
+    if (typeof window !== "undefined") window.location.href = url;
+  }, []);
 
   return (
     <form

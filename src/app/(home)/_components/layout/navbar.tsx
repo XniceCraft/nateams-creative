@@ -14,36 +14,14 @@ import {
 } from "@/components/ui/drawer";
 import { Image } from "@/components/image";
 import { MenuIcon } from "lucide-react";
+import { NavbarContent } from "@/content/navbar";
 import Link from "next/link";
-
-const routes = [
-  {
-    label: "Home",
-    href: "#hero-section",
-  },
-  {
-    label: "About",
-    href: "#",
-  },
-  {
-    label: "Services",
-    href: "#",
-  },
-  {
-    label: "Portfolio",
-    href: "#",
-  },
-  {
-    label: "Contact",
-    href: "#",
-  },
-] as const;
 
 function DesktopMenu() {
   return (
     <>
       <ul className="flex gap-4">
-        {routes.map((route) => (
+        {NavbarContent.routes.map((route) => (
           <li
             key={route.label}
             className="relative text-sm group overflow-y-hidden"
@@ -63,7 +41,11 @@ function DesktopMenu() {
           </li>
         ))}
       </ul>
-      <Button>Start a project</Button>
+      <Button asChild>
+        <a href={NavbarContent.ctaButtonUrl} target="_blank">
+          {NavbarContent.ctaButtonText}
+        </a>
+      </Button>
     </>
   );
 }
@@ -82,7 +64,7 @@ function MobileMenu() {
           <DrawerDescription>Main navigation menu</DrawerDescription>
         </DrawerHeader>
         <ul className="no-scrollbar space-y-6 px-4">
-          {routes.map((route) => (
+          {NavbarContent.routes.map((route) => (
             <li
               key={route.label}
               className="relative text-sm group overflow-y-hidden"
@@ -103,7 +85,11 @@ function MobileMenu() {
           ))}
         </ul>
         <DrawerFooter>
-          <Button>Start a project</Button>
+          <Button asChild>
+            <a href={NavbarContent.ctaButtonUrl} target="_blank">
+              {NavbarContent.ctaButtonText}
+            </a>
+          </Button>
           <DrawerClose asChild>
             <Button variant="outline">Close</Button>
           </DrawerClose>
@@ -123,7 +109,7 @@ export function Navbar() {
     >
       <div className="bg-white/50 backdrop-blur-lg rounded-full shadow py-2 px-4 max-w-6xl w-full mx-auto flex justify-between items-center">
         <Image
-          src="/logo.png"
+          src={NavbarContent.logo}
           className="size-8 object-contain hover:scale-105 hover:-rotate-12 transition-normal duration-300 ease-out"
           alt="Nateams logo"
         />
