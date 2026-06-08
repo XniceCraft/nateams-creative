@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 type SEO = Pick<
   Metadata,
-  "title" | "description" | "keywords" | "icons" | "openGraph" | "twitter"
+  "title" | "description" | "keywords" | "openGraph" | "twitter"
 >;
 
 export const SEO: SEO = {
@@ -17,7 +17,6 @@ export const SEO: SEO = {
     "next.js",
     "typescript",
   ],
-  icons: "/logo.png",
   openGraph: {
     title: "Nateams Creative - Software & Web Development Agency",
     description:

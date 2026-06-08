@@ -23,7 +23,6 @@ export const metadata: Metadata = {
     "max-video-preview": -1,
     googleBot: "index, follow",
   },
-  icons: SEO.icons,
   openGraph: SEO.openGraph,
   twitter: SEO.twitter,
 };
